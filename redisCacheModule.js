@@ -128,12 +128,12 @@ function redisCacheModule(config){
             else{
               self.db.setex(key, expiration, value, cb);
             }
-          }); 
+          });
         }
         else{
           self.db.setex(key, expiration, value, cb);
         }
-      } 
+      }
     }catch (err) {
       log(true, '.set() failed for cache of type ' + self.type, {name: 'RedisSetException', message: err});
     }
@@ -201,7 +201,7 @@ function redisCacheModule(config){
       log(true, '.del() failed for cache of type ' + self.type, err);
     }
   }
-  
+
   /**
    * Flush all keys and values from all configured caches in cacheCollection
    * @param {function} cb
@@ -293,7 +293,7 @@ function redisCacheModule(config){
     for(key in refreshKeys){
       if(refreshKeys.hasOwnProperty(key)){
         var data = refreshKeys[key];
-        if(data.expiration - Date.now() < self.backgroundRefreshMinTtl){
+        if(data.exp - Date.now() < self.backgroundRefreshMinTtl){
           data.refresh(key, function (err, response){
             if(!err){
               self.set(key, response, data.lifeSpan, data.refresh, noop);
@@ -333,5 +333,5 @@ function redisCacheModule(config){
 
   init();
 }
-      
+
 module.exports = redisCacheModule;
